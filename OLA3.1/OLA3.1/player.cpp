@@ -20,25 +20,25 @@ string Player :: getName() const {
 
 void Player :: drawCard(Deck &dk){
     Card temp;
-    hasPlayed[2] = false;
     // Enum through array
     for (int i = 0; i < 3; i++){
        // Checks if valid card in list
         if(hand[i].getPointValue() == -1){
             hand[i] = dk.dealCard();
+            hasPlayed[i] = false;
             // Only deal one card
             break;
         }
     }
-    for (int i = 0; i < 3; i++){
-        for(int j = i + 1; j < 3; j++){
-            if(hand[i] > hand[j]){
-                temp = hand[i];
-                hand[i] = hand[j];
-                hand[j] = temp;
-            }
-        }
-    }
+//    for (int i = 0; i < 3; i++){
+//        for(int j = i + 1; j < 3; j++){
+//            if(hand[i] > hand[j]){
+//                temp = hand[i];
+//                hand[i] = hand[j];
+//                hand[j] = temp;
+//            }
+//        }
+//    }
 }
 
 void Player :: addScore(Card acard){
@@ -62,25 +62,41 @@ bool Player :: emptyHand() const{
 }
 
 Card Player :: playCard(){
+    int pos = 0;
+    Card highHand = hand[0];
     // Stores highest card
     Card temp;
     // Enum through brute force and order cards lowest to highest
-    for (int i = 0; i < 3; i++){
-        for(int j = i + 1; j < 3; j++){
-            if(hand[i] > hand[j]){
-                temp = hand[i];
-                hand[i] = hand[j];
-                hand[j] = temp;
-            }
+//    for (int i = 0; i < 3; i++){
+//        for(int j = i + 1; j < 3; j++){
+//            if(hand[i] > hand[j]){
+////                hasPlayed[0] = false;
+////                hasPlayed[1] = false;
+////                hasPlayed[2] = false;
+//                temp = hand[i];
+//                hand[i] = hand[j];
+//                hand[j] = temp;
+//                temp = hand[j];
+////                hasPlayed[j] = true;
+//
+////                hand[j] = Card(-1, suit :: diamonds);
+//            }
+//        }
+//    }
+    
+    for(int i = 1; i < 3; i++){
+        if(hand[i] > highHand){
+            highHand = hand[i];
+            pos = i;
         }
     }
-
+//    cout << "Highest Card POSITION: " << pos << endl;
     // Only the 3rd card in array will be played
-    hasPlayed[2] = true;
+    hasPlayed[pos] = true;
     // Holds highest card
-    temp = hand[2];
+    temp = hand[pos];
     // Sets the highest card to a non-valid
-    hand[2] = Card(-1, suit :: diamonds);
+    hand[pos] = Card(-1, suit :: diamonds);
     return temp;
 }
 

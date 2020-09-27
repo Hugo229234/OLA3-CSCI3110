@@ -28,6 +28,9 @@ int main(){
     cout << theDeck << endl << endl;
     theDeck.Shuffle();
     cout << theDeck << endl << endl;
+    if(p1.emptyHand()){
+        cout<<"No Bands" << endl <<endl;
+    }
     // Initialize hand
     for(int i = 0; i < 3; i++){
         p1.drawCard(theDeck);
@@ -36,7 +39,7 @@ int main(){
 
     
     // Begin
-    while(!theDeck.isEmpty()){
+    while(!p1.emptyHand()){
         cout << roundNum << ")  " << p1.getName() << "  " << p1 << "(" <<
         p1.getScore() << ") - " << p2.getName() << "  " << p2 << "(" << p2.getScore() << ")" << endl;
         
@@ -59,9 +62,10 @@ int main(){
             p2.addScore(p1CardPlayed);
             p2.addScore(p2CardPlayed);
         }
-        p1.drawCard(theDeck);
-        p2.drawCard(theDeck);
-        
+        if(!theDeck.isEmpty()){
+            p1.drawCard(theDeck);
+            p2.drawCard(theDeck);
+        }
         roundNum ++;
     }
     
